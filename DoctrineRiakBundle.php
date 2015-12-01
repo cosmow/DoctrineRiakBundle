@@ -15,9 +15,9 @@
 namespace CosmoW\Bundle\RiakBundle;
 
 use Doctrine\Common\Util\ClassUtils;
-use Doctrine\Bundle\RiakBundle\DependencyInjection\Compiler\CreateHydratorDirectoryPass;
-use Doctrine\Bundle\RiakBundle\DependencyInjection\Compiler\CreateProxyDirectoryPass;
-use Doctrine\Bundle\RiakBundle\DependencyInjection\DoctrineRiakExtension;
+use CosmoW\Bundle\RiakBundle\DependencyInjection\Compiler\CreateHydratorDirectoryPass;
+use CosmoW\Bundle\RiakBundle\DependencyInjection\Compiler\CreateProxyDirectoryPass;
+use CosmoW\Bundle\RiakBundle\DependencyInjection\DoctrineRiakExtension;
 use Symfony\Bridge\Doctrine\DependencyInjection\CompilerPass\DoctrineValidationPass;
 use Symfony\Bridge\Doctrine\DependencyInjection\CompilerPass\RegisterEventListenersAndSubscribersPass;
 use Symfony\Bridge\Doctrine\DependencyInjection\Security\UserProvider\EntityFactory;
