@@ -79,7 +79,7 @@ class DoctrineRiakExtension extends AbstractDoctrineExtension
         }
 
         // BC Aliases for Document Manager
-        $container->setAlias('doctrine.odm.riak.document_manager', new Alias('doctrine_riak.odm.document_manager'));
+        //$container->setAlias('doctrine.odm.riak.document_manager', new Alias('doctrine_riak.odm.document_manager'));
     }
 
     /**

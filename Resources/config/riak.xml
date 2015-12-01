@@ -6,21 +6,21 @@
 
     <parameters>
         <!-- classes -->
-        <parameter key="doctrine_riak.odm.connection.class">Doctrine\Riak\Connection</parameter>
-        <parameter key="doctrine_riak.odm.configuration.class">Doctrine\ODM\Riak\Configuration</parameter>
-        <parameter key="doctrine_riak.odm.document_manager.class">Doctrine\ODM\Riak\DocumentManager</parameter>
-        <parameter key="doctrine_riak.odm.manager_configurator.class">Doctrine\Bundle\RiakBundle\ManagerConfigurator</parameter>
-        <parameter key="doctrine_riak.odm.logger.class">Doctrine\Bundle\RiakBundle\Logger\Logger</parameter>
-        <parameter key="doctrine_riak.odm.logger.aggregate.class">Doctrine\Bundle\RiakBundle\Logger\AggregateLogger</parameter>
-        <parameter key="doctrine_riak.odm.data_collector.standard.class">Doctrine\Bundle\RiakBundle\DataCollector\StandardDataCollector</parameter>
-        <parameter key="doctrine_riak.odm.data_collector.pretty.class">Doctrine\Bundle\RiakBundle\DataCollector\PrettyDataCollector</parameter>
+        <parameter key="doctrine_riak.odm.connection.class">CosmoW\Riak\Connection</parameter>
+        <parameter key="doctrine_riak.odm.configuration.class">CosmoW\ODM\Riak\Configuration</parameter>
+        <parameter key="doctrine_riak.odm.document_manager.class">CosmoW\ODM\Riak\DocumentManager</parameter>
+        <parameter key="doctrine_riak.odm.manager_configurator.class">CosmoW\Bundle\RiakBundle\ManagerConfigurator</parameter>
+        <parameter key="doctrine_riak.odm.logger.class">CosmoW\Bundle\RiakBundle\Logger\Logger</parameter>
+        <parameter key="doctrine_riak.odm.logger.aggregate.class">CosmoW\Bundle\RiakBundle\Logger\AggregateLogger</parameter>
+        <parameter key="doctrine_riak.odm.data_collector.standard.class">CosmoW\Bundle\RiakBundle\DataCollector\StandardDataCollector</parameter>
+        <parameter key="doctrine_riak.odm.data_collector.pretty.class">CosmoW\Bundle\RiakBundle\DataCollector\PrettyDataCollector</parameter>
         <parameter key="doctrine_riak.odm.event_manager.class">Symfony\Bridge\Doctrine\ContainerAwareEventManager</parameter>
         <parameter key="doctrine_odm.riak.validator_initializer.class">Symfony\Bridge\Doctrine\Validator\DoctrineInitializer</parameter>
         <parameter key="doctrine_odm.riak.validator.unique.class">Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator</parameter>
-        <parameter key="doctrine_riak.odm.class">Doctrine\Bundle\RiakBundle\ManagerRegistry</parameter>
+        <parameter key="doctrine_riak.odm.class">CosmoW\Bundle\RiakBundle\ManagerRegistry</parameter>
         <parameter key="doctrine_riak.odm.security.user.provider.class">Symfony\Bridge\Doctrine\Security\User\EntityUserProvider</parameter>
-        <parameter key="doctrine_riak.odm.proxy_cache_warmer.class">Doctrine\Bundle\RiakBundle\CacheWarmer\ProxyCacheWarmer</parameter>
-        <parameter key="doctrine_riak.odm.hydrator_cache_warmer.class">Doctrine\Bundle\RiakBundle\CacheWarmer\HydratorCacheWarmer</parameter>
+        <parameter key="doctrine_riak.odm.proxy_cache_warmer.class">CosmoW\Bundle\RiakBundle\CacheWarmer\ProxyCacheWarmer</parameter>
+        <parameter key="doctrine_riak.odm.hydrator_cache_warmer.class">CosmoW\Bundle\RiakBundle\CacheWarmer\HydratorCacheWarmer</parameter>
 
         <!-- cache -->
         <parameter key="doctrine_riak.odm.cache.array.class">Doctrine\Common\Cache\ArrayCache</parameter>
@@ -33,9 +33,9 @@
 
         <!-- metadata -->
         <parameter key="doctrine_riak.odm.metadata.driver_chain.class">Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain</parameter>
-        <parameter key="doctrine_riak.odm.metadata.annotation.class">Doctrine\ODM\Riak\Mapping\Driver\AnnotationDriver</parameter>
-        <parameter key="doctrine_riak.odm.metadata.xml.class">Doctrine\Bundle\RiakBundle\Mapping\Driver\XmlDriver</parameter>
-        <parameter key="doctrine_riak.odm.metadata.yml.class">Doctrine\Bundle\RiakBundle\Mapping\Driver\YamlDriver</parameter>
+        <parameter key="doctrine_riak.odm.metadata.annotation.class">CosmoW\ODM\Riak\Mapping\Driver\AnnotationDriver</parameter>
+        <parameter key="doctrine_riak.odm.metadata.xml.class">CosmoW\Bundle\RiakBundle\Mapping\Driver\XmlDriver</parameter>
+        <parameter key="doctrine_riak.odm.metadata.yml.class">CosmoW\Bundle\RiakBundle\Mapping\Driver\YamlDriver</parameter>
 
         <!-- directories -->
         <parameter key="doctrine_riak.odm.mapping_dirs" type="collection"></parameter>
@@ -48,7 +48,7 @@
         <parameter key="doctrine_riak.odm.logger.batch_insert_threshold">4</parameter>
 
         <!-- listeners -->
-        <parameter key="doctrine_riak.odm.listeners.resolve_target_document.class">Doctrine\ODM\Riak\Tools\ResolveTargetDocumentListener</parameter>
+        <parameter key="doctrine_riak.odm.listeners.resolve_target_document.class">CosmoW\ODM\Riak\Tools\ResolveTargetDocumentListener</parameter>
     </parameters>
 
     <services>
@@ -61,11 +61,11 @@
         </service>
 
         <!-- form -->
-        <service id="form.type.riak_document" class="Doctrine\Bundle\RiakBundle\Form\Type\DocumentType">
+        <service id="form.type.riak_document" class="CosmoW\Bundle\RiakBundle\Form\Type\DocumentType">
             <tag name="form.type" alias="document" />
             <argument type="service" id="doctrine_riak" />
         </service>
-        <service id="form.type_guesser.doctrine.riak" class="Doctrine\Bundle\RiakBundle\Form\DoctrineRiakTypeGuesser">
+        <service id="form.type_guesser.doctrine.riak" class="CosmoW\Bundle\RiakBundle\Form\CosmoWRiakTypeGuesser">
             <tag name="form.type_guesser" />
             <argument type="service" id="doctrine_riak" />
         </service>
