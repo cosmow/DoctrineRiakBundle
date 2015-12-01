@@ -1,0 +1,38 @@
+{
+    "name": "cosmow/riak-odm-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony2 Doctrine Riak Bundle",
+    "keywords": ["persistence", "riak", "symfony"],
+    "license": "MIT",
+    "authors": [
+        {"name": "ckmm"}
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "doctrine/key-value-store": "0.2",
+        "symfony/options-resolver": "~2.1",
+        "symfony/doctrine-bridge": "~2.1",
+        "symfony/framework-bundle": "~2.1",
+        "symfony/dependency-injection": "~2.2",
+        "symfony/console": "~2.1",
+        "symfony/config": "~2.2"
+    },
+    "require-dev": {
+        "doctrine/data-fixtures": "@dev",
+        "symfony/form": "~2.3",
+        "symfony/yaml": "~2.1"
+    },
+    "suggest": {
+        "doctrine/data-fixtures": "Load data fixtures"
+    },
+    "autoload": {
+        "psr-4": {
+            "CosmoW\\Bundle\\RiakBundle\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.0-dev"
+        }
+    }
+}
