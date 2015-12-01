@@ -69,7 +69,7 @@ class DoctrineRiakMappingsPass extends RegisterMappingsPass
     {
         $arguments = array($mappings, '.riak.xml');
         $locator = new Definition('Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator', $arguments);
-        $driver = new Definition('Doctrine\ODM\Riak\Mapping\Driver\XmlDriver', array($locator));
+        $driver = new Definition('CosmoW\ODM\Riak\Mapping\Driver\XmlDriver', array($locator));
 
         return new DoctrineRiakMappingsPass($driver, $mappings, $managerParameters, $enabledParameter, $aliasMap);
     }
@@ -89,7 +89,7 @@ class DoctrineRiakMappingsPass extends RegisterMappingsPass
     {
         $arguments = array($mappings, '.riak.yml');
         $locator = new Definition('Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator', $arguments);
-        $driver = new Definition('Doctrine\ODM\Riak\Mapping\Driver\YamlDriver', array($locator));
+        $driver = new Definition('CosmoW\ODM\Riak\Mapping\Driver\YamlDriver', array($locator));
 
         return new DoctrineRiakMappingsPass($driver, $mappings, $managerParameters, $enabledParameter, $aliasMap);
     }
@@ -130,7 +130,7 @@ class DoctrineRiakMappingsPass extends RegisterMappingsPass
     {
         $arguments = array(new Reference('doctrine_riak.odm.metadata.annotation_reader'), $directories);
         $locator = new Definition('Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator', $arguments);
-        $driver = new Definition('Doctrine\ODM\Riak\Mapping\Driver\AnnotationDriver', array($locator));
+        $driver = new Definition('CosmoW\ODM\Riak\Mapping\Driver\AnnotationDriver', array($locator));
 
         return new DoctrineRiakMappingsPass($driver, $namespaces, $managerParameters, $enabledParameter, $aliasMap);
     }

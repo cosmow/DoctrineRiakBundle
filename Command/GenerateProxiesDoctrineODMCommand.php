@@ -14,7 +14,7 @@
 
 namespace CosmoW\Bundle\RiakBundle\Command;
 
-use Doctrine\ODM\Riak\Tools\Console\Command\GenerateProxiesCommand;
+use CosmoW\ODM\Riak\Tools\Console\Command\GenerateProxiesCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;

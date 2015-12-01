@@ -15,7 +15,7 @@
 namespace CosmoW\Bundle\RiakBundle\Mapping\Driver;
 
 use Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator;
-use Doctrine\ODM\Riak\Mapping\Driver\YamlDriver as BaseYamlDriver;
+use CosmoW\ODM\Riak\Mapping\Driver\YamlDriver as BaseYamlDriver;
 
 /**
  * YamlDriver that additionally looks for mapping information in a global file.

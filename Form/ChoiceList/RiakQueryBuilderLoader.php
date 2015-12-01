@@ -15,7 +15,7 @@
 namespace CosmoW\Bundle\RiakBundle\Form\ChoiceList;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ODM\Riak\Query\Builder;
+use CosmoW\ODM\Riak\Query\Builder;
 use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityLoaderInterface;
 use Symfony\Component\Form\Exception\FormException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
@@ -47,14 +47,14 @@ class RiakQueryBuilderLoader implements EntityLoaderInterface
         // If a query builder was passed, it must be a closure or QueryBuilder
         // instance
         if (!($queryBuilder instanceof Builder || $queryBuilder instanceof \Closure)) {
-            throw new UnexpectedTypeException($queryBuilder, 'Doctrine\ODM\Riak\Query\Builder or \Closure');
+            throw new UnexpectedTypeException($queryBuilder, 'CosmoW\ODM\Riak\Query\Builder or \Closure');
         }
 
         if ($queryBuilder instanceof \Closure) {
             $queryBuilder = $queryBuilder($manager->getRepository($class));
 
             if (!$queryBuilder instanceof Builder) {
-                throw new UnexpectedTypeException($queryBuilder, 'Doctrine\ODM\Riak\Query\Builder');
+                throw new UnexpectedTypeException($queryBuilder, 'CosmoW\ODM\Riak\Query\Builder');
             }
         }
 

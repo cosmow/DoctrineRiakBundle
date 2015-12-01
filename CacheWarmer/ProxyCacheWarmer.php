@@ -71,7 +71,7 @@ class ProxyCacheWarmer implements CacheWarmerInterface
         /* @var $registry \Doctrine\Common\Persistence\ManagerRegistry */
         $registry = $this->container->get('doctrine_riak');
         foreach ($registry->getManagers() as $dm) {
-            /* @var $dm \Doctrine\ODM\Riak\DocumentManager */
+            /* @var $dm \CosmoW\ODM\Riak\DocumentManager */
             $classes = $dm->getMetadataFactory()->getAllMetadata();
             $dm->getProxyFactory()->generateProxyClasses($classes);
         }

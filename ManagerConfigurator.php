@@ -9,7 +9,7 @@
 
 namespace CosmoW\Bundle\RiakBundle;
 
-use Doctrine\ODM\Riak\DocumentManager;
+use CosmoW\ODM\Riak\DocumentManager;
 
 /**
  * Configurator for an DocumentManager

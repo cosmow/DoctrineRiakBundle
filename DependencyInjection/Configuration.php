@@ -96,7 +96,7 @@ class Configuration implements ConfigurationInterface
                                     ->booleanNode('pretty')->defaultValue('%kernel.debug%')->end()
                                 ->end()
                             ->end()
-                            ->scalarNode('default_repository_class')->defaultValue('Doctrine\ODM\Riak\DocumentRepository')->end()
+                            ->scalarNode('default_repository_class')->defaultValue('CosmoW\ODM\Riak\DocumentRepository')->end()
                             ->scalarNode('repository_factory')->defaultNull()->end()
                             ->booleanNode('auto_mapping')->defaultFalse()->end()
                             ->arrayNode('filters')

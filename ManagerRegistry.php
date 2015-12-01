@@ -14,7 +14,7 @@
 
 namespace CosmoW\Bundle\RiakBundle;
 
-use Doctrine\ODM\Riak\RiakException;
+use CosmoW\ODM\Riak\RiakException;
 use Symfony\Bridge\Doctrine\ManagerRegistry as BaseManagerRegistry;
 
 class ManagerRegistry extends BaseManagerRegistry

@@ -14,9 +14,9 @@
 
 namespace CosmoW\Bundle\RiakBundle\Command;
 
-use Doctrine\ODM\Riak\Tools\DisconnectedClassMetadataFactory;
-use Doctrine\ODM\Riak\Tools\DocumentGenerator;
-use Doctrine\ODM\Riak\Tools\Console\Helper\DocumentManagerHelper;
+use CosmoW\ODM\Riak\Tools\DisconnectedClassMetadataFactory;
+use CosmoW\ODM\Riak\Tools\DocumentGenerator;
+use CosmoW\ODM\Riak\Tools\Console\Helper\DocumentManagerHelper;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\HttpKernel\Bundle\Bundle;

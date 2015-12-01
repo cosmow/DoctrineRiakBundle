@@ -51,7 +51,7 @@ EOT
             $input->getOption('dm') :
             $this->getContainer()->get('doctrine_riak')->getDefaultManagerName();
 
-        /* @var $documentManager Doctrine\ODM\Riak\DocumentManager */
+        /* @var $documentManager CosmoW\ODM\Riak\DocumentManager */
         $documentManager = $this->getContainer()->get('doctrine_riak')->getManager($documentManagerName);
 
         $documentClassNames = $documentManager->getConfiguration()
