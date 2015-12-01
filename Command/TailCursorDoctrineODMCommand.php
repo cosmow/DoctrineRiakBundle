@@ -14,7 +14,7 @@
 
 namespace CosmoW\Bundle\RiakBundle\Command;
 
-use Doctrine\Bundle\RiakBundle\Cursor\TailableCursorProcessorInterface;
+use CosmoW\Bundle\RiakBundle\Cursor\TailableCursorProcessorInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;

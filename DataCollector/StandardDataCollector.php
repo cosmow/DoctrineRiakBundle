@@ -14,7 +14,7 @@
 
 namespace CosmoW\Bundle\RiakBundle\DataCollector;
 
-use Doctrine\Bundle\RiakBundle\Logger\LoggerInterface;
+use CosmoW\Bundle\RiakBundle\Logger\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;

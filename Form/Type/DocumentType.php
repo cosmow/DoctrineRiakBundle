@@ -14,7 +14,7 @@
 
 namespace CosmoW\Bundle\RiakBundle\Form\Type;
 
-use Doctrine\Bundle\RiakBundle\Form\ChoiceList\RiakQueryBuilderLoader;
+use CosmoW\Bundle\RiakBundle\Form\ChoiceList\RiakQueryBuilderLoader;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bridge\Doctrine\Form\Type\DoctrineType;
 use Symfony\Component\OptionsResolver\Options;
