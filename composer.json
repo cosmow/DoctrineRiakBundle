@@ -1,5 +1,5 @@
 {
-    "name": "cosmow/riak-odm-bundle",
+    "name": "cosmow/riak-bundle",
     "type": "symfony-bundle",
     "description": "Symfony2 Doctrine Riak Bundle",
     "keywords": ["persistence", "riak", "symfony"],
