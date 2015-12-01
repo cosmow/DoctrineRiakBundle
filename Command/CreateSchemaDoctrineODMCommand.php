@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * The code was originally distributed inside the Symfony framework.
  *
@@ -14,7 +14,7 @@
 
 namespace CosmoW\Bundle\RiakBundle\Command;
 
-use Doctrine\ODM\MongoDB\Tools\Console\Command\Schema\CreateCommand;
+use Doctrine\ODM\Riak\Tools\Console\Command\Schema\CreateCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -32,16 +32,16 @@ class CreateSchemaDoctrineODMCommand extends CreateCommand
         parent::configure();
 
         $this
-            ->setName('doctrine:mongodb:schema:create')
+            ->setName('doctrine:riak:schema:create')
             ->addOption('dm', null, InputOption::VALUE_REQUIRED, 'The document manager to use for this command.')
             ->setHelp(<<<EOT
-The <info>doctrine:mongodb:schema:create</info> command creates the default document manager's schema:
+The <info>doctrine:riak:schema:create</info> command creates the default document manager's schema:
 
-  <info>./app/console doctrine:mongodb:schema:create</info>
+  <info>./app/console doctrine:riak:schema:create</info>
 
 You can also optionally specify the name of a document manager to create the schema for:
 
-  <info>./app/console doctrine:mongodb:schema:create --dm=default</info>
+  <info>./app/console doctrine:riak:schema:create --dm=default</info>
 EOT
         );
     }

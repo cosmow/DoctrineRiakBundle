@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * The code was originally distributed inside the Symfony framework.
  *
@@ -29,18 +29,18 @@ class InfoDoctrineODMCommand extends DoctrineODMCommand
     protected function configure()
     {
         $this
-            ->setName('doctrine:mongodb:mapping:info')
+            ->setName('doctrine:riak:mapping:info')
             ->addOption('dm', null, InputOption::VALUE_OPTIONAL, 'The document manager to use for this command.')
             ->setDescription('Show basic information about all mapped documents.')
             ->setHelp(<<<EOT
-The <info>doctrine:mongodb:mapping:info</info> shows basic information about which
+The <info>doctrine:riak:mapping:info</info> shows basic information about which
 documents exist and possibly if their mapping information contains errors or not.
 
-  <info>./app/console doctrine:mongodb:mapping:info</info>
+  <info>./app/console doctrine:riak:mapping:info</info>
 
 If you are using multiple document managers you can pick your choice with the <info>--dm</info> option:
 
-  <info>./app/console doctrine:mongodb:mapping:info --dm=default</info>
+  <info>./app/console doctrine:riak:mapping:info --dm=default</info>
 EOT
         );
     }
@@ -49,10 +49,10 @@ EOT
     {
         $documentManagerName = $input->getOption('dm') ?
             $input->getOption('dm') :
-            $this->getContainer()->get('doctrine_mongodb')->getDefaultManagerName();
+            $this->getContainer()->get('doctrine_riak')->getDefaultManagerName();
 
-        /* @var $documentManager Doctrine\ODM\MongoDB\DocumentManager */
-        $documentManager = $this->getContainer()->get('doctrine_mongodb')->getManager($documentManagerName);
+        /* @var $documentManager Doctrine\ODM\Riak\DocumentManager */
+        $documentManager = $this->getContainer()->get('doctrine_riak')->getManager($documentManagerName);
 
         $documentClassNames = $documentManager->getConfiguration()
                                           ->getMetadataDriverImpl()
@@ -60,10 +60,10 @@ EOT
 
         if (!$documentClassNames) {
             throw new \Exception(
-                'You do not have any mapped Doctrine MongoDB ODM documents for any of your bundles. '.
+                'You do not have any mapped Doctrine Riak ODM documents for any of your bundles. '.
                 'Create a class inside the Document namespace of any of your bundles and provide '.
                 'mapping information for it with Annotations directly in the classes doc blocks '.
-                'or with XML/YAML in your bundles Resources/config/doctrine/metadata/mongodb directory.'
+                'or with XML/YAML in your bundles Resources/config/doctrine/metadata/riak directory.'
             );
         }
 

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * The code was originally distributed inside the Symfony framework.
  *
@@ -14,13 +14,13 @@
 
 namespace CosmoW\Bundle\RiakBundle\DataCollector;
 
-use Doctrine\Bundle\MongoDBBundle\Logger\LoggerInterface;
+use Doctrine\Bundle\RiakBundle\Logger\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
 /**
- * Data collector for the Doctrine MongoDB ODM.
+ * Data collector for the Doctrine Riak ODM.
  *
  * @author Kris Wallsmith <kris@symfony.com>
  */
@@ -56,6 +56,6 @@ class StandardDataCollector extends DataCollector implements LoggerInterface
 
     public function getName()
     {
-        return 'mongodb';
+        return 'riak';
     }
 }

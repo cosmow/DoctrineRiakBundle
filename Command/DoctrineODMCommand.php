@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * The code was originally distributed inside the Symfony framework.
  *
@@ -14,9 +14,9 @@
 
 namespace CosmoW\Bundle\RiakBundle\Command;
 
-use Doctrine\ODM\MongoDB\Tools\DisconnectedClassMetadataFactory;
-use Doctrine\ODM\MongoDB\Tools\DocumentGenerator;
-use Doctrine\ODM\MongoDB\Tools\Console\Helper\DocumentManagerHelper;
+use Doctrine\ODM\Riak\Tools\DisconnectedClassMetadataFactory;
+use Doctrine\ODM\Riak\Tools\DocumentGenerator;
+use Doctrine\ODM\Riak\Tools\Console\Helper\DocumentManagerHelper;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -30,7 +30,7 @@ abstract class DoctrineODMCommand extends ContainerAwareCommand
 {
     public static function setApplicationDocumentManager(Application $application, $dmName)
     {
-        $dm = $application->getKernel()->getContainer()->get('doctrine_mongodb')->getManager($dmName);
+        $dm = $application->getKernel()->getContainer()->get('doctrine_riak')->getManager($dmName);
         $helperSet = $application->getHelperSet();
         $helperSet->set(new DocumentManagerHelper($dm), 'dm');
     }
@@ -49,7 +49,7 @@ abstract class DoctrineODMCommand extends ContainerAwareCommand
 
     protected function getDoctrineDocumentManagers()
     {
-        return $this->getContainer()->get('doctrine_mongodb')->getManagers();
+        return $this->getContainer()->get('doctrine_riak')->getManagers();
     }
 
     protected function getBundleMetadatas(Bundle $bundle)

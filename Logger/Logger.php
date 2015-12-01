@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * The code was originally distributed inside the Symfony framework.
  *
@@ -27,7 +27,7 @@ class Logger implements LoggerInterface
     private $prefix;
     private $batchInsertTreshold;
 
-    public function __construct(SymfonyLogger $logger = null, $prefix = 'MongoDB query: ')
+    public function __construct(SymfonyLogger $logger = null, $prefix = 'Riak query: ')
     {
         $this->logger = $logger;
         $this->prefix = $prefix;
@@ -49,7 +49,7 @@ class Logger implements LoggerInterface
         }
 
         array_walk_recursive($query, function(&$value, $key) {
-            if ($value instanceof \MongoBinData) {
+            if ($value instanceof \RiakBinData) {
                 $value = base64_encode($value->bin);
                 return;
             }

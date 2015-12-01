@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * The code was originally distributed inside the Symfony framework.
  *
@@ -14,14 +14,14 @@
 
 namespace CosmoW\Bundle\RiakBundle\Form\Type;
 
-use Doctrine\Bundle\MongoDBBundle\Form\ChoiceList\MongoDBQueryBuilderLoader;
+use Doctrine\Bundle\RiakBundle\Form\ChoiceList\RiakQueryBuilderLoader;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bridge\Doctrine\Form\Type\DoctrineType;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Form type for a MongoDB document
+ * Form type for a Riak document
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  * @author Christophe Coevoet <stof@notk.org>
@@ -33,7 +33,7 @@ class DocumentType extends DoctrineType
      */
     public function getLoader(ObjectManager $manager, $queryBuilder, $class)
     {
-        return new MongoDBQueryBuilderLoader(
+        return new RiakQueryBuilderLoader(
             $queryBuilder,
             $manager,
             $class

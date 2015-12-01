@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * The code was originally distributed inside the Symfony framework.
  *
@@ -15,7 +15,7 @@
 namespace CosmoW\Bundle\RiakBundle\Mapping\Driver;
 
 use Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator;
-use Doctrine\ODM\MongoDB\Mapping\Driver\XmlDriver as BaseXmlDriver;
+use Doctrine\ODM\Riak\Mapping\Driver\XmlDriver as BaseXmlDriver;
 
 /**
  * XmlDriver that additionally looks for mapping information in a global file.
@@ -25,7 +25,7 @@ use Doctrine\ODM\MongoDB\Mapping\Driver\XmlDriver as BaseXmlDriver;
  */
 class XmlDriver extends BaseXmlDriver
 {
-    const DEFAULT_FILE_EXTENSION = '.mongodb.xml';
+    const DEFAULT_FILE_EXTENSION = '.riak.xml';
 
     /**
      * {@inheritDoc}

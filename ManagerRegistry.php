@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * The code was originally distributed inside the Symfony framework.
  *
@@ -14,7 +14,7 @@
 
 namespace CosmoW\Bundle\RiakBundle;
 
-use Doctrine\ODM\MongoDB\MongoDBException;
+use Doctrine\ODM\Riak\RiakException;
 use Symfony\Bridge\Doctrine\ManagerRegistry as BaseManagerRegistry;
 
 class ManagerRegistry extends BaseManagerRegistry
@@ -24,17 +24,17 @@ class ManagerRegistry extends BaseManagerRegistry
      *
      * @param string $alias
      * @return string
-     * @throws MongoDBException
+     * @throws RiakException
      */
     public function getAliasNamespace($alias)
     {
         foreach (array_keys($this->getManagers()) as $name) {
             try {
                 return $this->getManager($name)->getConfiguration()->getDocumentNamespace($alias);
-            } catch (MongoDBException $e) {
+            } catch (RiakException $e) {
             }
         }
 
-        throw MongoDBException::unknownDocumentNamespace($alias);
+        throw RiakException::unknownDocumentNamespace($alias);
     }
 }

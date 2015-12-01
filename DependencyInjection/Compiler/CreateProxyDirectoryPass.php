@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * The code was originally distributed inside the Symfony framework.
  *
@@ -21,15 +21,15 @@ class CreateProxyDirectoryPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasParameter('doctrine_mongodb.odm.proxy_dir')) {
+        if (!$container->hasParameter('doctrine_riak.odm.proxy_dir')) {
             return;
         }
         // Don't do anything if auto_generate_proxy_classes is false
-        if (!$container->getParameter('doctrine_mongodb.odm.auto_generate_proxy_classes')) {
+        if (!$container->getParameter('doctrine_riak.odm.auto_generate_proxy_classes')) {
             return;
         }
         // Create document proxy directory
-        $proxyCacheDir = $container->getParameter('doctrine_mongodb.odm.proxy_dir');
+        $proxyCacheDir = $container->getParameter('doctrine_riak.odm.proxy_dir');
         if (!is_dir($proxyCacheDir)) {
             if (false === @mkdir($proxyCacheDir, 0775, true)) {
                 exit(sprintf('Unable to create the Doctrine Proxy directory (%s)', dirname($proxyCacheDir)));

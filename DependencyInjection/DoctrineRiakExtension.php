@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * The code was originally distributed inside the Symfony framework.
  *
@@ -24,7 +24,7 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
 /**
- * Doctrine MongoDB ODM extension.
+ * Doctrine Riak ODM extension.
  *
  * @author Bulat Shakirzyanov <mallluhuct@gmail.com>
  * @author Kris Wallsmith <kris@symfony.com>
@@ -33,13 +33,13 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 class DoctrineRiakExtension extends AbstractDoctrineExtension
 {
     /**
-     * Responds to the doctrine_mongodb configuration parameter.
+     * Responds to the doctrine_riak configuration parameter.
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        // Load DoctrineMongoDBBundle/Resources/config/mongodb.xml
+        // Load DoctrineRiakBundle/Resources/config/riak.xml
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('mongodb.xml');
+        $loader->load('riak.xml');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -48,13 +48,13 @@ class DoctrineRiakExtension extends AbstractDoctrineExtension
             $keys = array_keys($config['connections']);
             $config['default_connection'] = reset($keys);
         }
-        $container->setParameter('doctrine_mongodb.odm.default_connection', $config['default_connection']);
+        $container->setParameter('doctrine_riak.odm.default_connection', $config['default_connection']);
 
         if (empty($config['default_document_manager'])) {
             $keys = array_keys($config['document_managers']);
             $config['default_document_manager'] = reset($keys);
         }
-        $container->setParameter('doctrine_mongodb.odm.default_document_manager', $config['default_document_manager']);
+        $container->setParameter('doctrine_riak.odm.default_document_manager', $config['default_document_manager']);
 
         // set some options as parameters and unset them
         $config = $this->overrideParameters($config, $container);
@@ -71,15 +71,15 @@ class DoctrineRiakExtension extends AbstractDoctrineExtension
         );
 
         if ($config['resolve_target_documents']) {
-            $def = $container->findDefinition('doctrine_mongodb.odm.listeners.resolve_target_document');
+            $def = $container->findDefinition('doctrine_riak.odm.listeners.resolve_target_document');
             foreach ($config['resolve_target_documents'] as $name => $implementation) {
                 $def->addMethodCall('addResolveTargetDocument', array($name, $implementation, array()));
             }
-            $def->addTag('doctrine_mongodb.odm.event_listener', array('event' => 'loadClassMetadata'));
+            $def->addTag('doctrine_riak.odm.event_listener', array('event' => 'loadClassMetadata'));
         }
 
         // BC Aliases for Document Manager
-        $container->setAlias('doctrine.odm.mongodb.document_manager', new Alias('doctrine_mongodb.odm.document_manager'));
+        $container->setAlias('doctrine.odm.riak.document_manager', new Alias('doctrine_riak.odm.document_manager'));
     }
 
     /**
@@ -102,7 +102,7 @@ class DoctrineRiakExtension extends AbstractDoctrineExtension
 
         foreach ($overrides as $key) {
             if (isset($options[$key])) {
-                $container->setParameter('doctrine_mongodb.odm.'.$key, $options[$key]);
+                $container->setParameter('doctrine_riak.odm.'.$key, $options[$key]);
 
                 // the option should not be used, the parameter should be referenced
                 unset($options[$key]);
@@ -131,9 +131,9 @@ class DoctrineRiakExtension extends AbstractDoctrineExtension
                 $defaultDB,
                 $container
             );
-            $dms[$name] = sprintf('doctrine_mongodb.odm.%s_document_manager', $name);
+            $dms[$name] = sprintf('doctrine_riak.odm.%s_document_manager', $name);
         }
-        $container->setParameter('doctrine_mongodb.odm.document_managers', $dms);
+        $container->setParameter('doctrine_riak.odm.document_managers', $dms);
     }
 
     /**
@@ -146,14 +146,14 @@ class DoctrineRiakExtension extends AbstractDoctrineExtension
      */
     protected function loadDocumentManager(array $documentManager, $defaultDM, $defaultDB, ContainerBuilder $container)
     {
-        $configServiceName = sprintf('doctrine_mongodb.odm.%s_configuration', $documentManager['name']);
+        $configServiceName = sprintf('doctrine_riak.odm.%s_configuration', $documentManager['name']);
         $connectionName = isset($documentManager['connection']) ? $documentManager['connection'] : $documentManager['name'];
         $defaultDatabase = isset($documentManager['database']) ? $documentManager['database'] : $defaultDB;
 
         if ($container->hasDefinition($configServiceName)) {
             $odmConfigDef = $container->getDefinition($configServiceName);
         } else {
-            $odmConfigDef = new Definition('%doctrine_mongodb.odm.configuration.class%');
+            $odmConfigDef = new Definition('%doctrine_riak.odm.configuration.class%');
             $container->setDefinition($configServiceName, $odmConfigDef);
         }
 
@@ -161,16 +161,16 @@ class DoctrineRiakExtension extends AbstractDoctrineExtension
         $this->loadObjectManagerCacheDriver($documentManager, $container, 'metadata_cache');
 
         $methods = array(
-            'setMetadataCacheImpl' => new Reference(sprintf('doctrine_mongodb.odm.%s_metadata_cache', $documentManager['name'])),
-            'setMetadataDriverImpl' => new Reference(sprintf('doctrine_mongodb.odm.%s_metadata_driver', $documentManager['name'])),
-            'setProxyDir' => '%doctrine_mongodb.odm.proxy_dir%',
-            'setProxyNamespace' => '%doctrine_mongodb.odm.proxy_namespace%',
-            'setAutoGenerateProxyClasses' => '%doctrine_mongodb.odm.auto_generate_proxy_classes%',
-            'setHydratorDir' => '%doctrine_mongodb.odm.hydrator_dir%',
-            'setHydratorNamespace' => '%doctrine_mongodb.odm.hydrator_namespace%',
-            'setAutoGenerateHydratorClasses' => '%doctrine_mongodb.odm.auto_generate_hydrator_classes%',
+            'setMetadataCacheImpl' => new Reference(sprintf('doctrine_riak.odm.%s_metadata_cache', $documentManager['name'])),
+            'setMetadataDriverImpl' => new Reference(sprintf('doctrine_riak.odm.%s_metadata_driver', $documentManager['name'])),
+            'setProxyDir' => '%doctrine_riak.odm.proxy_dir%',
+            'setProxyNamespace' => '%doctrine_riak.odm.proxy_namespace%',
+            'setAutoGenerateProxyClasses' => '%doctrine_riak.odm.auto_generate_proxy_classes%',
+            'setHydratorDir' => '%doctrine_riak.odm.hydrator_dir%',
+            'setHydratorNamespace' => '%doctrine_riak.odm.hydrator_namespace%',
+            'setAutoGenerateHydratorClasses' => '%doctrine_riak.odm.auto_generate_hydrator_classes%',
             'setDefaultDB' => $defaultDatabase,
-            'setDefaultCommitOptions' => '%doctrine_mongodb.odm.default_commit_options%',
+            'setDefaultCommitOptions' => '%doctrine_riak.odm.default_commit_options%',
             'setRetryConnect' => $documentManager['retry_connect'],
             'setRetryQuery' => $documentManager['retry_query'],
             'setDefaultRepositoryClassName' => $documentManager['default_repository_class'],
@@ -183,23 +183,23 @@ class DoctrineRiakExtension extends AbstractDoctrineExtension
         // logging
         $loggers = array();
         if ($container->getParameterBag()->resolveValue($documentManager['logging'])) {
-            $loggers[] = new Reference('doctrine_mongodb.odm.logger');
+            $loggers[] = new Reference('doctrine_riak.odm.logger');
         }
 
         // profiler
         if ($container->getParameterBag()->resolveValue($documentManager['profiler']['enabled'])) {
-            $dataCollectorId = sprintf('doctrine_mongodb.odm.data_collector.%s', $container->getParameterBag()->resolveValue($documentManager['profiler']['pretty']) ? 'pretty' : 'standard');
+            $dataCollectorId = sprintf('doctrine_riak.odm.data_collector.%s', $container->getParameterBag()->resolveValue($documentManager['profiler']['pretty']) ? 'pretty' : 'standard');
             $loggers[] = new Reference($dataCollectorId);
             $container
                 ->getDefinition($dataCollectorId)
-                ->addTag('data_collector', array( 'id' => 'mongodb', 'template' => 'DoctrineMongoDBBundle:Collector:mongodb'))
+                ->addTag('data_collector', array( 'id' => 'riak', 'template' => 'DoctrineRiakBundle:Collector:riak'))
             ;
         }
 
         if (1 < count($loggers)) {
-            $methods['setLoggerCallable'] = array(new Reference('doctrine_mongodb.odm.logger.aggregate'), 'logQuery');
+            $methods['setLoggerCallable'] = array(new Reference('doctrine_riak.odm.logger.aggregate'), 'logQuery');
             $container
-                ->getDefinition('doctrine_mongodb.odm.logger.aggregate')
+                ->getDefinition('doctrine_riak.odm.logger.aggregate')
                 ->addArgument($loggers)
             ;
         } elseif ($loggers) {
@@ -215,10 +215,10 @@ class DoctrineRiakExtension extends AbstractDoctrineExtension
             }
         }
 
-        $managerConfiguratorName = sprintf('doctrine_mongodb.odm.%s_manager_configurator', $documentManager['name']);
+        $managerConfiguratorName = sprintf('doctrine_riak.odm.%s_manager_configurator', $documentManager['name']);
 
         $managerConfiguratorDef = $container
-            ->setDefinition($managerConfiguratorName, new DefinitionDecorator('doctrine_mongodb.odm.manager_configurator.abstract'))
+            ->setDefinition($managerConfiguratorName, new DefinitionDecorator('doctrine_riak.odm.manager_configurator.abstract'))
             ->replaceArgument(0, $enabledFilters)
         ;
 
@@ -231,33 +231,33 @@ class DoctrineRiakExtension extends AbstractDoctrineExtension
         }
 
         $odmDmArgs = array(
-            new Reference(sprintf('doctrine_mongodb.odm.%s_connection', $connectionName)),
-            new Reference(sprintf('doctrine_mongodb.odm.%s_configuration', $documentManager['name'])),
+            new Reference(sprintf('doctrine_riak.odm.%s_connection', $connectionName)),
+            new Reference(sprintf('doctrine_riak.odm.%s_configuration', $documentManager['name'])),
             // Document managers will share their connection's event manager
-            new Reference(sprintf('doctrine_mongodb.odm.%s_connection.event_manager', $connectionName)),
+            new Reference(sprintf('doctrine_riak.odm.%s_connection.event_manager', $connectionName)),
         );
-        $odmDmDef = new Definition('%doctrine_mongodb.odm.document_manager.class%', $odmDmArgs);
+        $odmDmDef = new Definition('%doctrine_riak.odm.document_manager.class%', $odmDmArgs);
         if (method_exists($odmDmDef, 'setFactory')) {
-            $odmDmDef->setFactory(array('%doctrine_mongodb.odm.document_manager.class%', 'create'));
+            $odmDmDef->setFactory(array('%doctrine_riak.odm.document_manager.class%', 'create'));
         } else {
-            $odmDmDef->setFactoryClass('%doctrine_mongodb.odm.document_manager.class%');
+            $odmDmDef->setFactoryClass('%doctrine_riak.odm.document_manager.class%');
             $odmDmDef->setFactoryMethod('create');
         }
-        $odmDmDef->addTag('doctrine_mongodb.odm.document_manager');
+        $odmDmDef->addTag('doctrine_riak.odm.document_manager');
 
         $container
-            ->setDefinition(sprintf('doctrine_mongodb.odm.%s_document_manager', $documentManager['name']), $odmDmDef)
+            ->setDefinition(sprintf('doctrine_riak.odm.%s_document_manager', $documentManager['name']), $odmDmDef)
             ->setConfigurator(array(new Reference($managerConfiguratorName), 'configure'))
         ;
 
         if ($documentManager['name'] == $defaultDM) {
             $container->setAlias(
-                'doctrine_mongodb.odm.document_manager',
-                new Alias(sprintf('doctrine_mongodb.odm.%s_document_manager', $documentManager['name']))
+                'doctrine_riak.odm.document_manager',
+                new Alias(sprintf('doctrine_riak.odm.%s_document_manager', $documentManager['name']))
             );
             $container->setAlias(
-                'doctrine_mongodb.odm.event_manager',
-                new Alias(sprintf('doctrine_mongodb.odm.%s_connection.event_manager', $connectionName))
+                'doctrine_riak.odm.event_manager',
+                new Alias(sprintf('doctrine_riak.odm.%s_connection.event_manager', $connectionName))
             );
         }
     }
@@ -273,21 +273,21 @@ class DoctrineRiakExtension extends AbstractDoctrineExtension
         $cons = array();
         foreach ($connections as $name => $connection) {
             // Define an event manager for this connection
-            $eventManagerId = sprintf('doctrine_mongodb.odm.%s_connection.event_manager', $name);
-            $container->setDefinition($eventManagerId, new DefinitionDecorator('doctrine_mongodb.odm.connection.event_manager'));
+            $eventManagerId = sprintf('doctrine_riak.odm.%s_connection.event_manager', $name);
+            $container->setDefinition($eventManagerId, new DefinitionDecorator('doctrine_riak.odm.connection.event_manager'));
 
             $odmConnArgs = array(
                 isset($connection['server']) ? $connection['server'] : null,
                 isset($connection['options']) ? $connection['options'] : array(),
-                new Reference(sprintf('doctrine_mongodb.odm.%s_configuration', $name)),
+                new Reference(sprintf('doctrine_riak.odm.%s_configuration', $name)),
                 new Reference($eventManagerId),
             );
-            $odmConnDef = new Definition('%doctrine_mongodb.odm.connection.class%', $odmConnArgs);
-            $id = sprintf('doctrine_mongodb.odm.%s_connection', $name);
+            $odmConnDef = new Definition('%doctrine_riak.odm.connection.class%', $odmConnArgs);
+            $id = sprintf('doctrine_riak.odm.%s_connection', $name);
             $container->setDefinition($id, $odmConnDef);
             $cons[$name] = $id;
         }
-        $container->setParameter('doctrine_mongodb.odm.connections', $cons);
+        $container->setParameter('doctrine_riak.odm.connections', $cons);
     }
 
     /**
@@ -300,7 +300,7 @@ class DoctrineRiakExtension extends AbstractDoctrineExtension
      *
      * @example
      *
-     *  doctrine_mongodb:
+     *  doctrine_riak:
      *     mappings:
      *         MyBundle1: ~
      *         MyBundle2: yml
@@ -347,7 +347,7 @@ class DoctrineRiakExtension extends AbstractDoctrineExtension
 
     protected function getObjectManagerElementName($name)
     {
-        return 'doctrine_mongodb.odm.' . $name;
+        return 'doctrine_riak.odm.' . $name;
     }
 
     protected function getMappingObjectDefaultName()
@@ -362,12 +362,12 @@ class DoctrineRiakExtension extends AbstractDoctrineExtension
 
     protected function getMappingResourceExtension()
     {
-        return 'mongodb';
+        return 'riak';
     }
 
     public function getAlias()
     {
-        return 'doctrine_mongodb';
+        return 'doctrine_riak';
     }
 
     /**
@@ -377,7 +377,7 @@ class DoctrineRiakExtension extends AbstractDoctrineExtension
      */
     public function getNamespace()
     {
-        return 'http://symfony.com/schema/dic/doctrine/odm/mongodb';
+        return 'http://symfony.com/schema/dic/doctrine/odm/riak';
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * The code was originally distributed inside the Symfony framework.
  *
@@ -15,7 +15,7 @@
 namespace CosmoW\Bundle\RiakBundle\Logger;
 
 /**
- * Logger for the Doctrine MongoDB ODM.
+ * Logger for the Doctrine Riak ODM.
  *
  * The {@link logQuery()} method must be configured as the logger callable in
  * the service container.

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * The code was originally distributed inside the Symfony framework.
  *
@@ -14,7 +14,7 @@
 
 namespace CosmoW\Bundle\RiakBundle\Command;
 
-use Doctrine\ODM\MongoDB\Tools\DocumentRepositoryGenerator;
+use Doctrine\ODM\Riak\Tools\DocumentRepositoryGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -31,14 +31,14 @@ class GenerateRepositoriesDoctrineODMCommand extends DoctrineODMCommand
     protected function configure()
     {
         $this
-            ->setName('doctrine:mongodb:generate:repositories')
+            ->setName('doctrine:riak:generate:repositories')
             ->setDescription('Generate repository classes from your mapping information.')
             ->addArgument('bundle', InputArgument::REQUIRED, 'The bundle to initialize the repositories in.')
             ->addOption('document', null, InputOption::VALUE_OPTIONAL, 'The document class to generate the repository for (shortname without namespace).')
             ->setHelp(<<<EOT
-The <info>doctrine:mongodb:generate:repositories</info> command generates the configured document repository classes from your mapping information:
+The <info>doctrine:riak:generate:repositories</info> command generates the configured document repository classes from your mapping information:
 
-  <info>./app/console doctrine:mongodb:generate:repositories</info>
+  <info>./app/console doctrine:riak:generate:repositories</info>
 EOT
         );
     }

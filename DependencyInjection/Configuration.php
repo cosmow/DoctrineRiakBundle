@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * The code was originally distributed inside the Symfony framework.
  *
@@ -33,7 +33,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('doctrine_mongodb');
+        $rootNode = $treeBuilder->root('doctrine_riak');
 
         $this->addDocumentManagersSection($rootNode);
         $this->addConnectionsSection($rootNode);
@@ -41,11 +41,11 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('proxy_namespace')->defaultValue('MongoDBODMProxies')->end()
-                ->scalarNode('proxy_dir')->defaultValue('%kernel.cache_dir%/doctrine/odm/mongodb/Proxies')->end()
+                ->scalarNode('proxy_namespace')->defaultValue('RiakODMProxies')->end()
+                ->scalarNode('proxy_dir')->defaultValue('%kernel.cache_dir%/doctrine/odm/riak/Proxies')->end()
                 ->scalarNode('auto_generate_proxy_classes')->defaultValue(false)->end()
                 ->scalarNode('hydrator_namespace')->defaultValue('Hydrators')->end()
-                ->scalarNode('hydrator_dir')->defaultValue('%kernel.cache_dir%/doctrine/odm/mongodb/Hydrators')->end()
+                ->scalarNode('hydrator_dir')->defaultValue('%kernel.cache_dir%/doctrine/odm/riak/Hydrators')->end()
                 ->scalarNode('auto_generate_hydrator_classes')->defaultValue(false)->end()
                 ->scalarNode('default_document_manager')->end()
                 ->scalarNode('default_connection')->end()
@@ -96,7 +96,7 @@ class Configuration implements ConfigurationInterface
                                     ->booleanNode('pretty')->defaultValue('%kernel.debug%')->end()
                                 ->end()
                             ->end()
-                            ->scalarNode('default_repository_class')->defaultValue('Doctrine\ODM\MongoDB\DocumentRepository')->end()
+                            ->scalarNode('default_repository_class')->defaultValue('Doctrine\ODM\Riak\DocumentRepository')->end()
                             ->scalarNode('repository_factory')->defaultNull()->end()
                             ->booleanNode('auto_mapping')->defaultFalse()->end()
                             ->arrayNode('filters')
@@ -203,7 +203,7 @@ class Configuration implements ConfigurationInterface
                                 ->performNoDeepMerging()
                                 ->children()
                                     ->enumNode('authMechanism')
-                                        ->values(array('SCRAM-SHA-1', 'MONGODB-CR', 'X509', 'PLAIN', 'GSSAPI'))
+                                        ->values(array('SCRAM-SHA-1', 'RIAKDB-CR', 'X509', 'PLAIN', 'GSSAPI'))
                                     ->end()
                                     ->booleanNode('connect')->end()
                                     ->scalarNode('connectTimeoutMS')->end()

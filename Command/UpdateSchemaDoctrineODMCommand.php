@@ -11,7 +11,7 @@
 
 namespace CosmoW\Bundle\RiakBundle\Command;
 
-use Doctrine\ODM\MongoDB\Tools\Console\Command\Schema\UpdateCommand;
+use Doctrine\ODM\Riak\Tools\Console\Command\Schema\UpdateCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -27,16 +27,16 @@ class UpdateSchemaDoctrineODMCommand extends UpdateCommand
         parent::configure();
 
         $this
-            ->setName('doctrine:mongodb:schema:update')
+            ->setName('doctrine:riak:schema:update')
             ->addOption('dm', null, InputOption::VALUE_REQUIRED, 'The document manager to use for this command.')
             ->setHelp(<<<EOT
-The <info>doctrine:mongodb:schema:update</info> command updates the default document manager's schema:
+The <info>doctrine:riak:schema:update</info> command updates the default document manager's schema:
 
-  <info>./app/console doctrine:mongodb:schema:update</info>
+  <info>./app/console doctrine:riak:schema:update</info>
 
 You can also optionally specify the name of a document manager to update the schema for:
 
-  <info>./app/console doctrine:mongodb:schema:update --dm=default</info>
+  <info>./app/console doctrine:riak:schema:update --dm=default</info>
 EOT
         );
     }

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * The code was originally distributed inside the Symfony framework.
  *
@@ -14,7 +14,7 @@
 
 namespace CosmoW\Bundle\RiakBundle\Command;
 
-use Doctrine\ODM\MongoDB\Tools\Console\Command\GenerateProxiesCommand;
+use Doctrine\ODM\Riak\Tools\Console\Command\GenerateProxiesCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -32,16 +32,16 @@ class GenerateProxiesDoctrineODMCommand extends GenerateProxiesCommand
         parent::configure();
 
         $this
-            ->setName('doctrine:mongodb:generate:proxies')
+            ->setName('doctrine:riak:generate:proxies')
             ->addOption('dm', null, InputOption::VALUE_OPTIONAL, 'The document manager to use for this command.')
             ->setHelp(<<<EOT
-The <info>doctrine:mongodb:generate:proxies</info> command generates proxy classes for your default document manager:
+The <info>doctrine:riak:generate:proxies</info> command generates proxy classes for your default document manager:
 
-  <info>./app/console doctrine:mongodb:generate:proxies</info>
+  <info>./app/console doctrine:riak:generate:proxies</info>
 
 You can specify the document manager you want to generate the proxies for:
 
-  <info>./app/console doctrine:mongodb:generate:proxies --dm=name</info>
+  <info>./app/console doctrine:riak:generate:proxies --dm=name</info>
 EOT
         );
     }

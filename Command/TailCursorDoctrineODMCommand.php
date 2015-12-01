@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * The code was originally distributed inside the Symfony framework.
  *
@@ -14,7 +14,7 @@
 
 namespace CosmoW\Bundle\RiakBundle\Command;
 
-use Doctrine\Bundle\MongoDBBundle\Cursor\TailableCursorProcessorInterface;
+use Doctrine\Bundle\RiakBundle\Cursor\TailableCursorProcessorInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -32,8 +32,8 @@ class TailCursorDoctrineODMCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('doctrine:mongodb:tail-cursor')
-            ->setDescription('Tails a mongodb cursor and processes the documents that come through')
+            ->setName('doctrine:riak:tail-cursor')
+            ->setDescription('Tails a riak cursor and processes the documents that come through')
             ->addArgument('document', InputArgument::REQUIRED, 'The document we are going to tail the cursor for.')
             ->addArgument('finder', InputArgument::REQUIRED, 'The repository finder method which returns the cursor to tail.')
             ->addArgument('processor', InputArgument::REQUIRED, 'The service id to use to process the documents.')
@@ -44,7 +44,7 @@ class TailCursorDoctrineODMCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
+        $dm = $this->getContainer()->get('doctrine_riak.odm.document_manager');
         $repository = $dm->getRepository($input->getArgument('document'));
         $repositoryReflection = new \ReflectionClass($repository);
         $documentReflection = $repository->getDocumentManager()->getMetadataFactory()->getMetadataFor($input->getArgument('document'))->getReflectionClass();

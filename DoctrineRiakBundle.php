@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * The code was originally distributed inside the Symfony framework.
  *
@@ -15,9 +15,9 @@
 namespace CosmoW\Bundle\RiakBundle;
 
 use Doctrine\Common\Util\ClassUtils;
-use Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\CreateHydratorDirectoryPass;
-use Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\CreateProxyDirectoryPass;
-use Doctrine\Bundle\MongoDBBundle\DependencyInjection\DoctrineMongoDBExtension;
+use Doctrine\Bundle\RiakBundle\DependencyInjection\Compiler\CreateHydratorDirectoryPass;
+use Doctrine\Bundle\RiakBundle\DependencyInjection\Compiler\CreateProxyDirectoryPass;
+use Doctrine\Bundle\RiakBundle\DependencyInjection\DoctrineRiakExtension;
 use Symfony\Bridge\Doctrine\DependencyInjection\CompilerPass\DoctrineValidationPass;
 use Symfony\Bridge\Doctrine\DependencyInjection\CompilerPass\RegisterEventListenersAndSubscribersPass;
 use Symfony\Bridge\Doctrine\DependencyInjection\Security\UserProvider\EntityFactory;
@@ -26,7 +26,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Doctrine MongoDB ODM bundle.
+ * Doctrine Riak ODM bundle.
  *
  * @author Bulat Shakirzyanov <mallluhuct@gmail.com>
  * @author Kris Wallsmith <kris@symfony.com>
@@ -38,28 +38,28 @@ class DoctrineRiakBundle extends Bundle
 
     public function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new RegisterEventListenersAndSubscribersPass('doctrine_mongodb.odm.connections', 'doctrine_mongodb.odm.%s_connection.event_manager', 'doctrine_mongodb.odm'), PassConfig::TYPE_BEFORE_OPTIMIZATION);
+        $container->addCompilerPass(new RegisterEventListenersAndSubscribersPass('doctrine_riak.odm.connections', 'doctrine_riak.odm.%s_connection.event_manager', 'doctrine_riak.odm'), PassConfig::TYPE_BEFORE_OPTIMIZATION);
         $container->addCompilerPass(new CreateProxyDirectoryPass(), PassConfig::TYPE_BEFORE_REMOVING);
         $container->addCompilerPass(new CreateHydratorDirectoryPass(), PassConfig::TYPE_BEFORE_REMOVING);
-        $container->addCompilerPass(new DoctrineValidationPass('mongodb'));
+        $container->addCompilerPass(new DoctrineValidationPass('riak'));
 
         if ($container->hasExtension('security')) {
-            $container->getExtension('security')->addUserProviderFactory(new EntityFactory('mongodb', 'doctrine_mongodb.odm.security.user.provider'));
+            $container->getExtension('security')->addUserProviderFactory(new EntityFactory('riak', 'doctrine_riak.odm.security.user.provider'));
         }
     }
 
     public function getContainerExtension()
     {
-        return new DoctrineMongoDBExtension();
+        return new DoctrineRiakExtension();
     }
 
     public function boot()
     {
         // Register an autoloader for proxies to avoid issues when unserializing them
         // when the ODM is used.
-        if ($this->container->hasParameter('doctrine_mongodb.odm.proxy_namespace')) {
-            $namespace = $this->container->getParameter('doctrine_mongodb.odm.proxy_namespace');
-            $dir = $this->container->getParameter('doctrine_mongodb.odm.proxy_dir');
+        if ($this->container->hasParameter('doctrine_riak.odm.proxy_namespace')) {
+            $namespace = $this->container->getParameter('doctrine_riak.odm.proxy_namespace');
+            $dir = $this->container->getParameter('doctrine_riak.odm.proxy_dir');
             // See https://github.com/symfony/symfony/pull/3419 for usage of
             // references
             $container =& $this->container;
@@ -69,9 +69,9 @@ class DoctrineRiakBundle extends Bundle
                     $fileName = str_replace('\\', '', substr($class, strlen($namespace) +1));
                     $file = $dir.DIRECTORY_SEPARATOR.$fileName.'.php';
 
-                    if (!is_file($file) && $container->getParameter('doctrine_mongodb.odm.auto_generate_proxy_classes')) {
+                    if (!is_file($file) && $container->getParameter('doctrine_riak.odm.auto_generate_proxy_classes')) {
                         $originalClassName = ClassUtils::getRealClass($class);
-                        $registry = $container->get('doctrine_mongodb');
+                        $registry = $container->get('doctrine_riak');
 
                         // Tries to auto-generate the proxy file
                         foreach ($registry->getManagers() as $dm) {

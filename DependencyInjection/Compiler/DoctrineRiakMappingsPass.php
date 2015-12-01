@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * (c) Fabien Potencier <fabien@symfony.com>
  * (c) Doctrine Project, Benjamin Eberlei <kontakt@beberlei.de>
@@ -39,14 +39,14 @@ class DoctrineRiakMappingsPass extends RegisterMappingsPass
      */
     public function __construct($driver, array $namespaces, array $managerParameters, $enabledParameter = false, array $aliasMap = array())
     {
-        $managerParameters[] = 'doctrine_mongodb.odm.default_document_manager';
+        $managerParameters[] = 'doctrine_riak.odm.default_document_manager';
         parent::__construct(
             $driver,
             $namespaces,
             $managerParameters,
-            'doctrine_mongodb.odm.%s_metadata_driver',
+            'doctrine_riak.odm.%s_metadata_driver',
             $enabledParameter,
-            'doctrine_mongodb.odm.%s_configuration',
+            'doctrine_riak.odm.%s_configuration',
             'addDocumentNamespace',
             $aliasMap
 
@@ -67,11 +67,11 @@ class DoctrineRiakMappingsPass extends RegisterMappingsPass
      */
     public static function createXmlMappingDriver(array $mappings, array $managerParameters, $enabledParameter = false, array $aliasMap = array())
     {
-        $arguments = array($mappings, '.mongodb.xml');
+        $arguments = array($mappings, '.riak.xml');
         $locator = new Definition('Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator', $arguments);
-        $driver = new Definition('Doctrine\ODM\MongoDB\Mapping\Driver\XmlDriver', array($locator));
+        $driver = new Definition('Doctrine\ODM\Riak\Mapping\Driver\XmlDriver', array($locator));
 
-        return new DoctrineMongoDBMappingsPass($driver, $mappings, $managerParameters, $enabledParameter, $aliasMap);
+        return new DoctrineRiakMappingsPass($driver, $mappings, $managerParameters, $enabledParameter, $aliasMap);
     }
 
     /**
@@ -87,11 +87,11 @@ class DoctrineRiakMappingsPass extends RegisterMappingsPass
      */
     public static function createYamlMappingDriver(array $mappings, array $managerParameters, $enabledParameter = false, array $aliasMap = array())
     {
-        $arguments = array($mappings, '.mongodb.yml');
+        $arguments = array($mappings, '.riak.yml');
         $locator = new Definition('Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator', $arguments);
-        $driver = new Definition('Doctrine\ODM\MongoDB\Mapping\Driver\YamlDriver', array($locator));
+        $driver = new Definition('Doctrine\ODM\Riak\Mapping\Driver\YamlDriver', array($locator));
 
-        return new DoctrineMongoDBMappingsPass($driver, $mappings, $managerParameters, $enabledParameter, $aliasMap);
+        return new DoctrineRiakMappingsPass($driver, $mappings, $managerParameters, $enabledParameter, $aliasMap);
     }
 
     /**
@@ -111,7 +111,7 @@ class DoctrineRiakMappingsPass extends RegisterMappingsPass
         $locator = new Definition('Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator', $arguments);
         $driver = new Definition('Doctrine\Common\Persistence\Mapping\Driver\PHPDriver', array($locator));
 
-        return new DoctrineMongoDBMappingsPass($driver, $mappings, $managerParameters, $enabledParameter, $aliasMap);
+        return new DoctrineRiakMappingsPass($driver, $mappings, $managerParameters, $enabledParameter, $aliasMap);
     }
 
     /**
@@ -128,11 +128,11 @@ class DoctrineRiakMappingsPass extends RegisterMappingsPass
      */
     public static function createAnnotationMappingDriver(array $namespaces, array $directories, array $managerParameters, $enabledParameter = false, array $aliasMap = array())
     {
-        $arguments = array(new Reference('doctrine_mongodb.odm.metadata.annotation_reader'), $directories);
+        $arguments = array(new Reference('doctrine_riak.odm.metadata.annotation_reader'), $directories);
         $locator = new Definition('Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator', $arguments);
-        $driver = new Definition('Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver', array($locator));
+        $driver = new Definition('Doctrine\ODM\Riak\Mapping\Driver\AnnotationDriver', array($locator));
 
-        return new DoctrineMongoDBMappingsPass($driver, $namespaces, $managerParameters, $enabledParameter, $aliasMap);
+        return new DoctrineRiakMappingsPass($driver, $namespaces, $managerParameters, $enabledParameter, $aliasMap);
     }
 
     /**
@@ -151,6 +151,6 @@ class DoctrineRiakMappingsPass extends RegisterMappingsPass
     {
         $driver = new Definition('Doctrine\Common\Persistence\Mapping\Driver\StaticPHPDriver', array($directories));
 
-        return new DoctrineMongoDBMappingsPass($driver, $namespaces, $managerParameters, $enabledParameter, $aliasMap);
+        return new DoctrineRiakMappingsPass($driver, $namespaces, $managerParameters, $enabledParameter, $aliasMap);
     }
 }

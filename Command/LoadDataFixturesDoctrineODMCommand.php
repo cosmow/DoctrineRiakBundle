@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * The code was originally distributed inside the Symfony framework.
  *
@@ -14,8 +14,8 @@
 
 namespace CosmoW\Bundle\RiakBundle\Command;
 
-use Doctrine\Common\DataFixtures\Executor\MongoDBExecutor;
-use Doctrine\Common\DataFixtures\Purger\MongoDBPurger;
+use Doctrine\Common\DataFixtures\Executor\RiakExecutor;
+use Doctrine\Common\DataFixtures\Purger\RiakPurger;
 use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -40,38 +40,38 @@ class LoadDataFixturesDoctrineODMCommand extends DoctrineODMCommand
     protected function configure()
     {
         $this
-            ->setName('doctrine:mongodb:fixtures:load')
+            ->setName('doctrine:riak:fixtures:load')
             ->setDescription('Load data fixtures to your database.')
             ->addOption('fixtures', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'The directory or file to load data fixtures from.')
             ->addOption('append', null, InputOption::VALUE_NONE, 'Append the data fixtures instead of flushing the database first.')
             ->addOption('dm', null, InputOption::VALUE_REQUIRED, 'The document manager to use for this command.')
             ->setHelp(<<<EOT
-The <info>doctrine:mongodb:fixtures:load</info> command loads data fixtures from your bundles:
+The <info>doctrine:riak:fixtures:load</info> command loads data fixtures from your bundles:
 
-  <info>./app/console doctrine:mongodb:fixtures:load</info>
+  <info>./app/console doctrine:riak:fixtures:load</info>
 
 You can also optionally specify the path to fixtures with the <info>--fixtures</info> option:
 
-  <info>./app/console doctrine:mongodb:fixtures:load --fixtures=/path/to/fixtures1 --fixtures=/path/to/fixtures2</info>
+  <info>./app/console doctrine:riak:fixtures:load --fixtures=/path/to/fixtures1 --fixtures=/path/to/fixtures2</info>
 
 If you want to append the fixtures instead of flushing the database first you can use the <info>--append</info> option:
 
-  <info>./app/console doctrine:mongodb:fixtures:load --append</info>
+  <info>./app/console doctrine:riak:fixtures:load --append</info>
 EOT
         );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dm = $this->getContainer()->get('doctrine_mongodb')->getManager($input->getOption('dm'));
+        $dm = $this->getContainer()->get('doctrine_riak')->getManager($input->getOption('dm'));
         $dirOrFile = $input->getOption('fixtures');
         if ($dirOrFile) {
             $paths = is_array($dirOrFile) ? $dirOrFile : array($dirOrFile);
         } else {
-            $paths = $this->getContainer()->getParameter('doctrine_mongodb.odm.fixtures_dirs');
+            $paths = $this->getContainer()->getParameter('doctrine_riak.odm.fixtures_dirs');
             $paths = is_array($paths) ? $paths : array($paths);
             foreach ($this->getContainer()->get('kernel')->getBundles() as $bundle) {
-                $paths[] = $bundle->getPath().'/DataFixtures/MongoDB';
+                $paths[] = $bundle->getPath().'/DataFixtures/Riak';
             }
         }
 
@@ -89,8 +89,8 @@ EOT
             );
         }
 
-        $purger = new MongoDBPurger($dm);
-        $executor = new MongoDBExecutor($dm, $purger);
+        $purger = new RiakPurger($dm);
+        $executor = new RiakExecutor($dm, $purger);
         $executor->setLogger(function($message) use ($output) {
             $output->writeln(sprintf('  <comment>></comment> <info>%s</info>', $message));
         });

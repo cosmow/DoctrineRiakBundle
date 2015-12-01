@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDB Bundle
+ * This file is part of the Doctrine Riak Bundle
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -9,7 +9,7 @@
 
 namespace CosmoW\Bundle\RiakBundle;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\Riak\DocumentManager;
 
 /**
  * Configurator for an DocumentManager

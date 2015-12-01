@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * The code was originally distributed inside the Symfony framework.
  *
@@ -14,7 +14,7 @@
 
 namespace CosmoW\Bundle\RiakBundle\DataCollector;
 
-use Doctrine\MongoDB\GridFSFile;
+use Doctrine\Riak\GridFSFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -203,22 +203,22 @@ class PrettyDataCollector extends StandardDataCollector
                 $formatted = '"'.$value.'"';
             } elseif (is_array($value)) {
                 $formatted = $this->bsonEncode($value);
-            } elseif ($value instanceof \MongoId) {
+            } elseif ($value instanceof \RiakId) {
                 $formatted = 'ObjectId("'.$value.'")';
-            } elseif ($value instanceof \MongoDate) {
+            } elseif ($value instanceof \RiakDate) {
                 $formatted = 'new ISODate("'.date('c', $value->sec).'")';
             } elseif ($value instanceof \DateTime) {
                 $formatted = 'new ISODate("'.date('c', $value->getTimestamp()).'")';
-            } elseif ($value instanceof \MongoRegex) {
+            } elseif ($value instanceof \RiakRegex) {
                 $formatted = 'new RegExp("'.$value->regex.'", "'.$value->flags.'")';
-            } elseif ($value instanceof \MongoMinKey) {
+            } elseif ($value instanceof \RiakMinKey) {
                 $formatted = 'new MinKey()';
-            } elseif ($value instanceof \MongoMaxKey) {
+            } elseif ($value instanceof \RiakMaxKey) {
                 $formatted = 'new MaxKey()';
-            } elseif ($value instanceof \MongoBinData) {
+            } elseif ($value instanceof \RiakBinData) {
                 $formatted = 'new BinData('.$value->type.', "'.base64_encode($value->bin).'")';
-            } elseif ($value instanceof \MongoGridFSFile || $value instanceof GridFSFile) {
-                $formatted = 'new MongoGridFSFile("'.$value->getFilename().'")';
+            } elseif ($value instanceof \RiakGridFSFile || $value instanceof GridFSFile) {
+                $formatted = 'new RiakGridFSFile("'.$value->getFilename().'")';
             } elseif ($value instanceof \stdClass) {
                 $formatted = $this->bsonEncode((array) $value);
             } else {

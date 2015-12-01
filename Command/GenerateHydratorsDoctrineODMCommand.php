@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine MongoDBBundle
+ * This file is part of the Doctrine RiakBundle
  *
  * The code was originally distributed inside the Symfony framework.
  *
@@ -14,7 +14,7 @@
 
 namespace CosmoW\Bundle\RiakBundle\Command;
 
-use Doctrine\ODM\MongoDB\Tools\Console\Command\GenerateHydratorsCommand;
+use Doctrine\ODM\Riak\Tools\Console\Command\GenerateHydratorsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -32,16 +32,16 @@ class GenerateHydratorsDoctrineODMCommand extends GenerateHydratorsCommand
         parent::configure();
 
         $this
-            ->setName('doctrine:mongodb:generate:hydrators')
+            ->setName('doctrine:riak:generate:hydrators')
             ->addOption('dm', null, InputOption::VALUE_OPTIONAL, 'The document manager to use for this command.')
             ->setHelp(<<<EOT
-The <info>doctrine:mongodb:generate:hydrators</info> command generates hydrator classes for your documents:
+The <info>doctrine:riak:generate:hydrators</info> command generates hydrator classes for your documents:
 
-  <info>./app/console doctrine:mongodb:generate:hydrators</info>
+  <info>./app/console doctrine:riak:generate:hydrators</info>
 
 You can specify the document manager you want to generate the hydrators for:
 
-  <info>./app/console doctrine:mongodb:generate:hydrators --dm=name</info>
+  <info>./app/console doctrine:riak:generate:hydrators --dm=name</info>
 EOT
         );
     }
