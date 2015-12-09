@@ -1,17 +1,5 @@
 <?php
 
-/*
- * This file is part of the Doctrine RiakBundle
- *
- * The code was originally distributed inside the Symfony framework.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- * (c) Doctrine Project
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace CosmoW\Bundle\RiakBundle\Form;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -26,7 +14,7 @@ use Symfony\Component\Form\Guess\ValueGuess;
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
-class DoctrineRiakTypeGuesser implements FormTypeGuesserInterface
+class CosmoWRiakTypeGuesser implements FormTypeGuesserInterface
 {
     protected $registry;
 
